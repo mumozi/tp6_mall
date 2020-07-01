@@ -9,7 +9,7 @@ class AdminUser
 {
     public static function login($data) {
         try {
-            $adminUser = getAdminUserByUsername($data['username']);
+            $adminUser = AdminUser::getAdminUserByUsername($data['username']);
             if(empty($adminUser)){
                 throw new Exception("不存在该用户");
             }
@@ -25,6 +25,7 @@ class AdminUser
                 'last_login_ip' => request()->ip(),
                 'update_time' =>time(),
             ];
+            $adminUserObj  = new AdminUserModel();
             $res = $adminUserObj->updateById($adminUser['id'], $updateData);
 
             if (empty($res)) {
